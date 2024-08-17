@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:news_app_dummy_api/config/theme.dart';
-import 'package:news_app_dummy_api/pages/home/home_page.dart';
+import 'package:news_app_dummy_api/pages/dashboard/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'News App',
       themeMode: ThemeMode.system,
       theme: lightTheme,
        darkTheme: darkTheme,
-      home: HomePage(),
+      home: Dashboard(),
     );
   }
 }
