@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-kPrint(String msg){
+kPrint(dynamic msg){
   if(kDebugMode){
     print(msg);
   }

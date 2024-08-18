@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app_dummy_api/components/bottom_navbar.dart';
 import 'package:news_app_dummy_api/controller/bottom_nav_controller.dart';
-import 'package:news_app_dummy_api/pages/article/article_page.dart';
+import 'package:news_app_dummy_api/pages/article/tech_crunch_screen.dart';
 import 'package:news_app_dummy_api/pages/home/home_page.dart';
 import 'package:news_app_dummy_api/pages/profile/profile_page.dart';
 
@@ -17,7 +17,7 @@ class _DashboardState extends State<Dashboard> {
   BottomNavController bottomNavController=Get.put(BottomNavController());
   final _pages=[
     const HomePage(),
-    const ArticlePage(),
+    const TechCrunchScreen(),
     const ProfilePage(),
   ];
   @override

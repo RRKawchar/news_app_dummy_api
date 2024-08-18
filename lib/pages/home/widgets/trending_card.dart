@@ -64,7 +64,7 @@ class TrendingCard extends StatelessWidget {
                   child: Text(
                    title,
                     maxLines: 2,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
@@ -80,7 +80,7 @@ class TrendingCard extends StatelessWidget {
                   radius: 12,
                 ),
                 const SizedBox(width: 10),
-                 Text(author)
+                 Flexible(child: Text(author,maxLines: 1,overflow: TextOverflow.ellipsis,))
               ],
             ),
             const SizedBox(height: 10),

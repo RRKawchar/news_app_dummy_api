@@ -1,9 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_app_dummy_api/config/app_constants.dart';
+import 'package:news_app_dummy_api/model/news_model.dart';
 
 class NewsDetailsPage extends StatelessWidget {
-  const NewsDetailsPage({super.key});
+  final NewsModel newsList;
+  const NewsDetailsPage({
+    super.key,
+    required this.newsList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class NewsDetailsPage extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Container(
                   height: 300,
                   decoration: BoxDecoration(
@@ -39,43 +44,45 @@ class NewsDetailsPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      "https://t4.ftcdn.net/jpg/05/65/52/61/360_F_565526112_dfCgD9rs0hEH2N0pNBp5Y0cyhTeLWaxT.jpg",
+                     newsList.urlToImage??dummyUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Row(
+                const SizedBox(height: 20),
+                 Row(
                   children: [
                     Flexible(
                       child: Text(
-                        "আমাদের জল সংরক্ষণ করা উচিত এবং এটি দূষিত করা উচিত নয় যাতে এটি ভবিষ্যতের প্রজন্মের জন্যও উপলব্ধ থাকে।"
-                        " আমাদের পানির অপচয় বন্ধ করা উচিত এবং এটি সঠিকভাবে ব্যবহার করা উচিত জলের যথাযথ মানও বজায় রাখা। জল পৃথিবীতে আল্লাহর "
-                        " মূল্যবান উপহার। পানির সহজলভ্যতার কারণে পৃথিবীতে জীবন বিদ্যমান.",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                       newsList.title??"This news has no headline",
+                        style: const TextStyle(
+                            fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
-                    Text(
-                      "2 days ago * Tech",
-                      style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor),
+                    Flexible(
+                      child: Text(
+                        "${newsList.author} * ${newsList.publishedAt}",
+                        style: TextStyle(
+                            color: Theme.of(context).secondaryHeaderColor),
+                      ),
                     )
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 10,
                       backgroundColor: Colors.red,
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       "Riyazur Rohman Kawchar",
                       style: TextStyle(
@@ -84,16 +91,12 @@ class NewsDetailsPage extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 20),
-                Row(
+                const SizedBox(height: 20),
+                 Row(
                   children: [
                     Flexible(
                       child: Text(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
-                          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
-                          "when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                          " It has survived not only five centuries, but also the leap into electronic typesetting,"
-                          " remaining essentially unchanged."),
+                          newsList.description??"No Description"),
                     ),
                   ],
                 )
