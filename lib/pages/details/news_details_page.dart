@@ -1,6 +1,8 @@
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app_dummy_api/config/app_constants.dart';
+import 'package:news_app_dummy_api/controller/news_controller.dart';
 import 'package:news_app_dummy_api/model/news_model.dart';
 
 class NewsDetailsPage extends StatelessWidget {
@@ -12,6 +14,7 @@ class NewsDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewsController newsController = Get.put(NewsController());
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -44,19 +47,19 @@ class NewsDetailsPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                     newsList.urlToImage??dummyUrl,
+                      newsList.urlToImage ?? dummyUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                 Row(
+                Row(
                   children: [
                     Flexible(
                       child: Text(
-                       newsList.title??"This news has no headline",
+                        newsList.title ?? "This news has no headline",
                         style: const TextStyle(
-                            fontSize: 25,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -84,7 +87,7 @@ class NewsDetailsPage extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      "Riyazur Rohman Kawchar",
+                      newsList.author ?? "Unknown",
                       style: TextStyle(
                           fontSize: 18,
                           color: Theme.of(context).secondaryHeaderColor),
@@ -92,11 +95,52 @@ class NewsDetailsPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                 Row(
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).colorScheme.primaryContainer),
+                  child: Row(
+                    children: [
+                      Obx(
+                        () => newsController.isSpeaking.value
+                            ? InkWell(
+                                onTap: () {
+                                  newsController.stop();
+                                },
+                                child: const Icon(
+                                  Icons.stop,
+                                  size: 50,
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  newsController.speak(
+                                      newsList.description ?? "No Description");
+                                },
+                                child: const Icon(
+                                  Icons.play_arrow_rounded,
+                                  size: 50,
+                                ),
+                              ),
+                      ),
+                      AnimatedContainer(
+                        duration: const Duration(seconds: 1),
+                        margin: const EdgeInsets.all(8.0),
+                        width: 8.0,
+                        height: 8.0,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
                   children: [
                     Flexible(
-                      child: Text(
-                          newsList.description??"No Description"),
+                      child: Text(newsList.description ?? "No Description"),
                     ),
                   ],
                 )

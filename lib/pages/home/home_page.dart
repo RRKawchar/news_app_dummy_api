@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app_dummy_api/components/bottom_navbar.dart';
+import 'package:news_app_dummy_api/components/news_for_you_shimmer.dart';
+import 'package:news_app_dummy_api/components/trending_shimmer_loading.dart';
 import 'package:news_app_dummy_api/config/app_constants.dart';
 import 'package:news_app_dummy_api/controller/news_controller.dart';
 import 'package:news_app_dummy_api/pages/details/news_details_page.dart';
@@ -77,25 +79,29 @@ class _HomePageState extends State<HomePage> {
               SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Obx(
-                    () => newsController.isTrendingNewsLoading.value?
-                    const Center(child: CircularProgressIndicator(),):
-                    Row(
-                        children: newsController.trendingNewsList
-                            .map(
-                              (e) => TrendingCard(
-                            onTap: () {
-                              Get.to(NewsDetailsPage(
-                                newsList: e,
-                              ));
-                            },
-                            imageUrl: e.urlToImage!,
-                            title: e.title.toString(),
-                            author: e.author ?? "UnKnown",
-                            tag: "Trending no 1",
-                            time: e.publishedAt.toString(),
-                          ),
-                        )
-                            .toList()),
+                    () => newsController.isTrendingNewsLoading.value
+                        ? const Row(
+                      children: [
+                        TrendingShimmerLoading(),
+                        TrendingShimmerLoading(),
+                      ],
+                    )
+                        : Row(
+                            children: newsController.trendingNewsList
+                                .map((trendingNews) => TrendingCard(
+                                    onTap: () {
+                                      Get.to(NewsDetailsPage(
+                                        newsList: trendingNews,
+                                      ));
+                                    },
+                                    imageUrl: trendingNews.urlToImage!,
+                                    title: trendingNews.title.toString(),
+                                    author: trendingNews.author ?? "UnKnown",
+                                    tag: "Trending no 1",
+                                    time: trendingNews.publishedAt.toString(),
+                                  ),
+                                )
+                                .toList()),
                   )),
               const SizedBox(height: 20),
               Row(
@@ -113,23 +119,28 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Obx(
-                () => newsController.isForYouNewsLoading.value?
-                const Center(child: CircularProgressIndicator(),):
-                Column(
-                  children: newsController.forYouNewsListFive
-                      .map(
-                        (e) => NewsForYouTile(
-                      onTap: () {
-                        Get.to(NewsDetailsPage(newsList: e));
-                      },
-                      imageUrl: e.urlToImage ?? dummyUrl,
-                      title: e.title ?? "This news has no headline",
-                      author: e.author ?? "Unknown",
-                      time: e.publishedAt ?? "Published date empty",
-                    ),
-                  )
-                      .toList(),
-                ),
+                () => newsController.isForYouNewsLoading.value
+                    ? const Column(
+                  children: [
+                      NewsForYouShimmer(),
+                      NewsForYouShimmer(),
+                      NewsForYouShimmer(),
+
+                ],)
+                    : Column(
+                        children: newsController.forYouNewsListFive
+                            .map((forYouNews) => NewsForYouTile(
+                                onTap: () {
+                                  Get.to(NewsDetailsPage(newsList: forYouNews));
+                                },
+                                imageUrl: forYouNews.urlToImage ?? dummyUrl,
+                                title: forYouNews.title ?? "This news has no headline",
+                                author: forYouNews.author ?? "Unknown",
+                                time: forYouNews.publishedAt ?? "Published date empty",
+                              ),
+                            )
+                            .toList(),
+                      ),
               ),
               const SizedBox(height: 20),
               Row(
@@ -147,23 +158,28 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Obx(
-                    () => newsController.isAppleNewsLoading.value?
-                        const Center(child: CircularProgressIndicator(),):
-                        Column(
-                         children: newsController.appleFiveNewsList
-                          .map(
-                            (e) => NewsForYouTile(
-                          onTap: () {
-                            Get.to(NewsDetailsPage(newsList: e));
-                          },
-                          imageUrl: e.urlToImage ?? dummyUrl,
-                          title: e.title ?? "This news has no headline",
-                          author: e.author ?? "Unknown",
-                          time: e.publishedAt ?? "Published date empty",
-                        ),
-                      )
-                          .toList(),
-                    ),
+                () => newsController.isAppleNewsLoading.value
+                    ?  const Column(
+                  children: [
+                    NewsForYouShimmer(),
+                    NewsForYouShimmer(),
+                    NewsForYouShimmer(),
+
+                  ],)
+                    : Column(
+                        children: newsController.appleFiveNewsList
+                            .map((appleNews) => NewsForYouTile(
+                                onTap: () {
+                                  Get.to(NewsDetailsPage(newsList: appleNews));
+                                },
+                                imageUrl: appleNews.urlToImage ?? dummyUrl,
+                                title: appleNews.title ?? "This news has no headline",
+                                author: appleNews.author ?? "Unknown",
+                                time: appleNews.publishedAt ?? "Published date empty",
+                              ),
+                            )
+                            .toList(),
+                      ),
               ),
               const SizedBox(height: 20),
               Row(
@@ -183,24 +199,28 @@ class _HomePageState extends State<HomePage> {
               SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Obx(
-                        () => newsController.isTeslaNewsLoading.value?
-                            const Center(child: CircularProgressIndicator(),):
-                            Row(
-                            children: newsController.teslaFiveNewsList
-                                .map(
-                                  (e) => TrendingCard(
-                                onTap: () {
-                                  Get.to(NewsDetailsPage(
-                                    newsList: e,
-                                  ));
-                                },
-                                imageUrl: e.urlToImage!,
-                                title: e.title.toString(),
-                                author: e.author ?? "UnKnown",
-                                tag: "Trending no 1",
-                                time: e.publishedAt.toString(),
-                              ),
-                            )
+                    () => newsController.isTechCrunchNewsLoading.value
+                        ? const Row(
+                      children: [
+                        TrendingShimmerLoading(),
+                        TrendingShimmerLoading(),
+                      ],
+                    )
+                        : Row(
+                            children: newsController.techCrunchFiveNewsList
+                                .map((teslaNews) => TrendingCard(
+                                    onTap: () {
+                                      Get.to(NewsDetailsPage(
+                                        newsList: teslaNews,
+                                      ));
+                                    },
+                                    imageUrl: teslaNews.urlToImage!,
+                                    title: teslaNews.title.toString(),
+                                    author: teslaNews.author ?? "UnKnown",
+                                    tag: "Trending no 1",
+                                    time: teslaNews.publishedAt.toString(),
+                                  ),
+                                )
                                 .toList()),
                   )),
               const SizedBox(height: 20),
@@ -219,23 +239,24 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Obx(
-                    () =>newsController.isBusinessNewsLoading.value?
-                        const Center(child: CircularProgressIndicator(),):
-                        Column(
-                          children: newsController.businessFiveNewsList
-                          .map(
-                            (e) => NewsForYouTile(
-                          onTap: () {
-                            Get.to(NewsDetailsPage(newsList: e));
-                          },
-                          imageUrl: e.urlToImage ?? dummyUrl,
-                          title: e.title ?? "This news has no headline",
-                          author: e.author ?? "Unknown",
-                          time: e.publishedAt ?? "Published date empty",
-                        ),
+                () => newsController.isBusinessNewsLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
                       )
-                          .toList(),
-                    ),
+                    : Column(
+                        children: newsController.businessFiveNewsList
+                            .map((businessNews) => NewsForYouTile(
+                                onTap: () {
+                                  Get.to(NewsDetailsPage(newsList: businessNews));
+                                },
+                                imageUrl: businessNews.urlToImage ?? dummyUrl,
+                                title: businessNews.title ?? "This news has no headline",
+                                author: businessNews.author ?? "Unknown",
+                                time: businessNews.publishedAt ?? "Published date empty",
+                              ),
+                            )
+                            .toList(),
+                      ),
               ),
             ],
           ),

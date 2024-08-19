@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_app_dummy_api/components/news_for_you_shimmer.dart';
 import 'package:news_app_dummy_api/config/app_constants.dart';
 import 'package:news_app_dummy_api/controller/news_controller.dart';
-import 'package:news_app_dummy_api/pages/article/widgets/search_widget.dart';
 import 'package:news_app_dummy_api/pages/details/news_details_page.dart';
 import 'package:news_app_dummy_api/pages/home/widgets/news_for_you_tile.dart';
+import 'package:news_app_dummy_api/pages/tech/widgets/search_widget.dart';
 
 class TechCrunchScreen extends StatefulWidget {
   const TechCrunchScreen({super.key});
@@ -15,6 +16,8 @@ class TechCrunchScreen extends StatefulWidget {
 
 class _TechCrunchScreenState extends State<TechCrunchScreen> {
   NewsController newsController = Get.put(NewsController());
+  TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,12 +26,19 @@ class _TechCrunchScreenState extends State<TechCrunchScreen> {
           padding: const EdgeInsets.all(10.0),
           child: ListView(
             children: [
-              const SearchWidget(),
+               SearchWidget(textEditingController: textEditingController,),
               const SizedBox(height: 20),
               Obx(
-                () =>newsController.isTechCrunchNewsLoading.value?
-                     const Center(child: CircularProgressIndicator(),):
-                      Column(
+                    () =>newsController.isTechCrunchNewsLoading.value?
+                const Column(
+                  children: [
+                    NewsForYouShimmer(),
+                    NewsForYouShimmer(),
+                    NewsForYouShimmer(),
+
+                  ],)
+                    :
+                Column(
                     children: newsController.techCrunchNewsList
                         .map((news) =>
                         NewsForYouTile(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
 import 'package:news_app_dummy_api/config/helper.dart';
@@ -23,6 +24,9 @@ RxBool isAppleNewsLoading=true.obs;
 RxBool isTeslaNewsLoading=true.obs;
 RxBool isBusinessNewsLoading=true.obs;
 RxBool isTechCrunchNewsLoading=true.obs;
+RxBool isSpeaking=false.obs;
+
+FlutterTts flutterTts = FlutterTts();
 
 
 
@@ -182,6 +186,48 @@ Future<void> getTechCrunchNews()async{
   }
 }
 
+Future<void> searchNews(String search)async{
+  try{
+    isTechCrunchNewsLoading.value=true;
+    var baseUrl="https://newsapi.org/v2/top-headlines?q=$search&apiKey=5e43308aa29444d5802a838943259116";
+    var response=await http.get(Uri.parse(baseUrl));
+    kPrint(response);
+    if(response.statusCode==200){
+      var jsonBody=jsonDecode(response.body);
+      var article=jsonBody['articles'];
+      techCrunchNewsList.clear();
+      int i=0;
+      for(var news in article){
+        i++;
+        techCrunchNewsList.add(NewsModel.fromJson(news));
+        if(i==10){
+          break;
+        }
+      }
+    }else{
+      kPrint("Something went wrong in for you news list");
+    }
+  }catch(e){
+    kPrint(e.toString());
+    throw e.toString();
+  }finally{
+    isTechCrunchNewsLoading.value=false;
+  }
+}
 
+Future<void> speak(String text)async{
+  isSpeaking.value=true;
+  await flutterTts.setLanguage("en-US");
+  await flutterTts.setPitch(1.0);
+  await flutterTts.setSpeechRate(0.4);
+  await flutterTts.speak(text);
+
+}
+
+
+void stop()async{
+  await flutterTts.stop();
+  isSpeaking.value=false;
+}
 
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app_dummy_api/config/theme.dart';
+import 'package:news_app_dummy_api/pages/dashboard/dashboard.dart';
 import 'package:news_app_dummy_api/pages/shimmer_loading_test_screen.dart';
+import 'package:news_app_dummy_api/pages/text_to_speak/text_to_speak_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
        darkTheme: darkTheme,
       //home: Dashboard(),
-      home: ShimmerLoadingTestScreen(),
+      home: TextToSpeakScreen()
     );
   }
 }

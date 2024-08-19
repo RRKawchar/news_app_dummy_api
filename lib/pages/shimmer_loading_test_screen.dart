@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app_dummy_api/components/shimmer_container.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerLoadingTestScreen extends StatelessWidget {
@@ -11,56 +12,59 @@ class ShimmerLoadingTestScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(right: 10),
-              padding: const EdgeInsets.all(5),
-              width: 280,
+              margin: const EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).colorScheme.primaryContainer),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
                 children: [
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).colorScheme.background),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'tag',
-                        style: Theme.of(context).textTheme.labelSmall,
-                      ),
-                      Text(
-                        'time',
-                        style: Theme.of(context).textTheme.labelSmall,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    "title test jdjd",
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: 20,
+                  ShimmerContainer(height: 120, width: 120),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            ShimmerContainer(height: 28, width: 28),
+
+                            const SizedBox(width: 10),
+                            ShimmerContainer(
+                                height: 20,
+                                width: MediaQuery.of(context).size.width/2.6
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        ShimmerContainer(
+                            height: 15,
+                            width: MediaQuery.of(context).size.width/1.8
+                        ),
+                        const SizedBox(height: 3),
+                        ShimmerContainer(
+                            height: 15,
+                            width: MediaQuery.of(context).size.width/2
+                        ),
+                        const SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ShimmerContainer(
+                                height: 15,
+                                width: MediaQuery.of(context).size.width/4
+                            ),
+                            ShimmerContainer(
+                                height: 15,
+                                width: MediaQuery.of(context).size.width/4
+                            ),
+                          ],
+                        )
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      CircleAvatar(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        radius: 12,
-                      ),
-                      const SizedBox(width: 10),
-                      const Flexible(child: Text("ddfdgdf",maxLines: 1,overflow: TextOverflow.ellipsis,))
-                    ],
-                  ),
-                  const SizedBox(height: 10),
+                  )
                 ],
               ),
             ),
