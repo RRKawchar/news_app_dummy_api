@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_app_dummy_api/src/core/di/app_bindings.dart';
+import 'package:news_app_dummy_api/src/core/route/app_route.dart';
 import 'package:news_app_dummy_api/src/core/theme/theme.dart';
-import 'package:news_app_dummy_api/src/features/dashboard/view/pages/dashboard.dart';
 
 
 void main() {
@@ -19,8 +20,11 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: lightTheme,
        darkTheme: darkTheme,
-       home: Dashboard(),
-      // home: TextToSpeakScreen()
+       initialRoute: AppRoute.splashScreen,
+       getPages:AppRoute.appRouteList,
+       initialBinding: AppBindings(),
+      // home: Dashboard(),
+      //  home: ShimmerLoadingTestScreen()
     );
   }
 }

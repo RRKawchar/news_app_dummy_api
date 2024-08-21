@@ -12,7 +12,7 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NewsController newsController = Get.put(NewsController());
+    NewsController newsController = Get.find<NewsController>();
 
     return Container(
       padding: const EdgeInsets.all(5),
@@ -26,7 +26,7 @@ class SearchWidget extends StatelessWidget {
               child: TextField(
             controller: textEditingController,
             decoration: InputDecoration(
-                hintText: "Search book....",
+                hintText: "Search news....",
                 //prefixIcon: Icon(Icons.search),
                 fillColor: Theme.of(context).colorScheme.primaryContainer,
                 border: InputBorder.none),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_app_dummy_api/src/core/route/app_route.dart';
+import 'package:news_app_dummy_api/src/core/utils/assets_path.dart';
 import 'package:news_app_dummy_api/src/features/text_to_speak/view/page/text_to_speak_screen.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
@@ -8,27 +10,21 @@ class CustomDrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: MediaQuery.of(context).size.width/1.5,
+      width: MediaQuery.of(context).size.width / 1.5,
       child: SafeArea(
         child: Column(
           children: [
-            Container(
-              alignment: Alignment.center,
-              height: 150,
-              width: 150,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                shape: BoxShape.circle
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.asset(
+                kAppLogo,
+                height: 170,
+                width: 170,
               ),
-              child: const Text("NEWS",style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 48
-              ),),
             ),
-
             ListTile(
-              onTap: (){
-               Get.to(const TextToSpeakScreen());
+              onTap: () {
+                Get.toNamed(AppRoute.textToSpeakScreen);
               },
               title: const Text("Text To Speech"),
               leading: const Icon(Icons.arrow_right_outlined),

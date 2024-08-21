@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart'as http;
 import 'package:news_app_dummy_api/src/core/helpers/helper.dart';
+import 'package:news_app_dummy_api/src/core/network/api_endpoints.dart';
+import 'package:news_app_dummy_api/src/core/network/api_handler.dart';
 import 'package:news_app_dummy_api/src/features/home/model/news_model.dart';
 class NewsController extends GetxController{
 RxList<NewsModel> trendingNewsList=<NewsModel>[].obs;
@@ -33,80 +32,76 @@ FlutterTts flutterTts = FlutterTts();
 
 @override
 void onInit() {
-  getTrendingNews();
-  getForYouNews();
-  getTeslaNews();
-  getAppleNews();
-  getBusinessNews();
-  getTechCrunchNews();
-  setUpCompletionHandler();
+ getTrendingNews();
+ getForYouNews();
+ getAppleNews();
+ getTeslaNews();
+ getBusinessNews();
+ getTechCrunchNews();
+ setUpCompletionHandler();
   super.onInit();
 }
 
 
-  Future<void> getTrendingNews()async{
-    try{
-      isTrendingNewsLoading.value=true;
-      var baseUrl="https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=5e43308aa29444d5802a838943259116";
-      var response=await http.get(Uri.parse(baseUrl));
-      kPrint(response);
-      if(response.statusCode==200){
-        var jsonBody=jsonDecode(response.body);
-        var article=jsonBody['articles'];
-        for(var news in article){
-          trendingNewsList.add(NewsModel.fromJson(news));
-        }
-      }else{
-        kPrint("Something went wrong in Trending news");
+Future<void> getTrendingNews()async{
+  try{
+    isTrendingNewsLoading.value=true;
+    var response=await ApiHandler.handleResponse(await ApiHandler.getRequest(api: ApiEndpoints.trendingNewsApi));
+    if(response !=null){
+      trendingNewsList.value=[];
+      for(var trendingNews in response['articles']){
+        trendingNewsList.add(NewsModel.fromJson(trendingNews));
       }
-    }catch(e){
-      kPrint(e.toString());
-      throw e.toString();
-    }finally{
-      isTrendingNewsLoading.value=false;
+    }else {
+      kPrint("Something went wrong in Trending news");
     }
-  }
 
-  Future<void> getForYouNews()async{
-    try{
-      isForYouNewsLoading.value=true;
-      var baseUrl="https://newsapi.org/v2/everything?domains=wsj.com&apiKey=5e43308aa29444d5802a838943259116";
-      var response=await http.get(Uri.parse(baseUrl));
-      kPrint(response);
-      if(response.statusCode==200){
-        var jsonBody=jsonDecode(response.body);
-        var article=jsonBody['articles'];
-        for(var news in article){
-          forYouNewsList.add(NewsModel.fromJson(news));
-        }
-        forYouNewsListFive.value=forYouNewsList.sublist(0,5);
-      }else{
-        kPrint("Something went wrong in for you news list");
+  }catch(e){
+    kPrint(e.toString());
+    throw e.toString();
+  }finally{
+    isTrendingNewsLoading.value=false;
+  }
+}
+
+
+
+Future<void> getForYouNews()async{
+  try{
+    isForYouNewsLoading.value=true;
+    var response=await ApiHandler.handleResponse(await ApiHandler.getRequest(api: ApiEndpoints.newsForYouApi));
+    if(response !=null){
+      forYouNewsList.value=[];
+      for(var news in response['articles']){
+        forYouNewsList.add(NewsModel.fromJson(news));
       }
-    }catch(e){
-      kPrint(e.toString());
-      throw e.toString();
-    }finally{
-      isForYouNewsLoading.value=false;
+      forYouNewsListFive.value=forYouNewsList.sublist(0,5);
+    }else {
+      kPrint("Something went wrong in Trending news");
     }
-  }
 
-  Future<void> getAppleNews()async{
+  }catch(e){
+    kPrint(e.toString());
+    throw e.toString();
+  }finally{
+    isForYouNewsLoading.value=false;
+  }
+}
+
+Future<void> getAppleNews()async{
   try{
     isAppleNewsLoading.value=true;
-    var baseUrl="https://newsapi.org/v2/everything?q=apple&from=2024-08-17&to=2024-08-17&sortBy=popularity&apiKey=5e43308aa29444d5802a838943259116";
-    var response=await http.get(Uri.parse(baseUrl));
-    kPrint(response);
-    if(response.statusCode==200){
-      var jsonBody=jsonDecode(response.body);
-      var article=jsonBody['articles'];
-      for(var news in article){
+    var response=await ApiHandler.handleResponse(await ApiHandler.getRequest(api: ApiEndpoints.appleNewsApi));
+    if(response !=null){
+      appleNewsList.value=[];
+      for(var news in response['articles']){
         appleNewsList.add(NewsModel.fromJson(news));
       }
       appleFiveNewsList.value=appleNewsList.sublist(0,5);
-    }else{
-      kPrint("Something went wrong in for you news list");
+    }else {
+      kPrint("Something went wrong in Trending news");
     }
+
   }catch(e){
     kPrint(e.toString());
     throw e.toString();
@@ -115,46 +110,44 @@ void onInit() {
   }
 }
 
-  Future<void> getTeslaNews()async{
-    try{
-      isTeslaNewsLoading.value=true;
-      var baseUrl="https://newsapi.org/v2/everything?q=tesla&from=2024-07-18&sortBy=publishedAt&apiKey=5e43308aa29444d5802a838943259116";
-      var response=await http.get(Uri.parse(baseUrl));
-      kPrint(response);
-      if(response.statusCode==200){
-        var jsonBody=jsonDecode(response.body);
-        var article=jsonBody['articles'];
-        for(var news in article){
-          teslaNewsList.add(NewsModel.fromJson(news));
-        }
-        teslaFiveNewsList.value=teslaNewsList.sublist(0,5);
-      }else{
-        kPrint("Something went wrong in for you news list");
+Future<void> getTeslaNews()async{
+  try{
+    isTeslaNewsLoading.value=true;
+    var response=await ApiHandler.handleResponse(await ApiHandler.getRequest(api: ApiEndpoints.teslaNewsApi));
+    if(response !=null){
+      teslaNewsList.value=[];
+      for(var news in response['articles']){
+        teslaNewsList.add(NewsModel.fromJson(news));
       }
-    }catch(e){
-      kPrint(e.toString());
-      throw e.toString();
-    }finally{
-      isTeslaNewsLoading.value=false;
+      teslaFiveNewsList.value=teslaNewsList.sublist(0,5);
+    }else {
+      kPrint("Something went wrong in tesla news");
     }
+
+  }catch(e){
+    kPrint(e.toString());
+    throw e.toString();
+  }finally{
+    isTeslaNewsLoading.value=false;
   }
+}
+
+
 
 Future<void> getBusinessNews()async{
   try{
     isBusinessNewsLoading.value=true;
-    var baseUrl="https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=5e43308aa29444d5802a838943259116";
-    var response=await http.get(Uri.parse(baseUrl));
-    kPrint(response);
-    if(response.statusCode==200){
-      var jsonBody=jsonDecode(response.body);
-      var article=jsonBody['articles'];
-      for(var news in article){
+    var response=await ApiHandler.handleResponse(await ApiHandler.getRequest(api: ApiEndpoints.businessNewsApi));
+    if(response !=null){
+      businessNewsList.value=[];
+      for(var news in response['articles']){
         businessNewsList.add(NewsModel.fromJson(news));
       }
       businessFiveNewsList.value=businessNewsList.sublist(0,5);
-    }else{
-      kPrint("Something went wrong in for you news list");
+    }else {
+      kPrint("Something went wrong in business news list");
     }
+
   }catch(e){
     kPrint(e.toString());
     throw e.toString();
@@ -163,22 +156,22 @@ Future<void> getBusinessNews()async{
   }
 }
 
+
+
 Future<void> getTechCrunchNews()async{
   try{
     isTechCrunchNewsLoading.value=true;
-    var baseUrl="https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=5e43308aa29444d5802a838943259116";
-    var response=await http.get(Uri.parse(baseUrl));
-    kPrint(response);
-    if(response.statusCode==200){
-      var jsonBody=jsonDecode(response.body);
-      var article=jsonBody['articles'];
-      for(var news in article){
+    var response=await ApiHandler.handleResponse(await ApiHandler.getRequest(api: ApiEndpoints.techCrunchNewsApi));
+    if(response !=null){
+      techCrunchNewsList.value=[];
+      for(var news in response['articles']){
         techCrunchNewsList.add(NewsModel.fromJson(news));
       }
       techCrunchFiveNewsList.value=techCrunchNewsList.sublist(0,5);
-    }else{
-      kPrint("Something went wrong in for you news list");
+    }else {
+      kPrint("Something went wrong in tech crunch news list");
     }
+
   }catch(e){
     kPrint(e.toString());
     throw e.toString();
@@ -187,27 +180,26 @@ Future<void> getTechCrunchNews()async{
   }
 }
 
+
 Future<void> searchNews(String search)async{
   try{
     isTechCrunchNewsLoading.value=true;
-    var baseUrl="https://newsapi.org/v2/top-headlines?q=$search&apiKey=5e43308aa29444d5802a838943259116";
-    var response=await http.get(Uri.parse(baseUrl));
-    kPrint(response);
-    if(response.statusCode==200){
-      var jsonBody=jsonDecode(response.body);
-      var article=jsonBody['articles'];
-      techCrunchNewsList.clear();
+    var response=await ApiHandler.handleResponse(await ApiHandler.getRequest(api: ApiEndpoints.searchNewsApi(search: search)));
+    if(response !=null){
+      techCrunchNewsList.value=[];
       int i=0;
-      for(var news in article){
+      for(var news in response['articles']){
         i++;
         techCrunchNewsList.add(NewsModel.fromJson(news));
         if(i==10){
           break;
         }
       }
-    }else{
-      kPrint("Something went wrong in for you news list");
+      techCrunchFiveNewsList.value=techCrunchNewsList.sublist(0,5);
+    }else {
+      kPrint("Something went wrong in tech crunch news list");
     }
+
   }catch(e){
     kPrint(e.toString());
     throw e.toString();
@@ -215,6 +207,8 @@ Future<void> searchNews(String search)async{
     isTechCrunchNewsLoading.value=false;
   }
 }
+
+
 
 
 void setUpCompletionHandler() {

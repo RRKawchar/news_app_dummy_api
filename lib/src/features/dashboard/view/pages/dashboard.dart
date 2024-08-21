@@ -14,7 +14,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  BottomNavController bottomNavController=Get.put(BottomNavController());
+  BottomNavController bottomNavController=Get.find<BottomNavController>();
   final _pages=[
     const HomePage(),
     const TechCrunchScreen(),

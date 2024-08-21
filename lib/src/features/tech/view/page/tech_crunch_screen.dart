@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_app_dummy_api/src/core/route/app_route.dart';
 import 'package:news_app_dummy_api/src/features/home/controller/news_controller.dart';
 import 'package:news_app_dummy_api/src/core/components/news_for_you_shimmer.dart';
 import 'package:news_app_dummy_api/src/core/utils/app_constants.dart';
@@ -15,7 +16,7 @@ class TechCrunchScreen extends StatefulWidget {
 }
 
 class _TechCrunchScreenState extends State<TechCrunchScreen> {
-  NewsController newsController = Get.put(NewsController());
+  NewsController newsController = Get.find<NewsController>();
   TextEditingController textEditingController = TextEditingController();
 
   @override
@@ -43,7 +44,7 @@ class _TechCrunchScreenState extends State<TechCrunchScreen> {
                         .map((news) =>
                         NewsForYouTile(
                           onTap: () {
-                            Get.to(NewsDetailsPage(newsList: news));
+                            Get.toNamed(AppRoute.newsDetailsPage,arguments:news);
                           },
                           imageUrl: news.urlToImage ?? dummyUrl,
                           title: news.title ?? "No Headline",

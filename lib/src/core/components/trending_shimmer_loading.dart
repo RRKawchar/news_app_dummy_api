@@ -26,20 +26,21 @@ class TrendingShimmerLoading extends StatelessWidget {
             children: [
               ShimmerContainer(
                 height: 20,
-                width: MediaQuery.of(context).size.width/3,
+                width: MediaQuery.of(context).size.width/4,
               ),
               ShimmerContainer(
                 height: 20,
-                width: MediaQuery.of(context).size.width/3,
+                width: MediaQuery.of(context).size.width/4,
               ),
             ],
           ),
           const SizedBox(height: 10),
           Row(
             children: [
+
               ShimmerContainer(
                 height: 28,
-                width: MediaQuery.of(context).size.width/1.5,
+                width: MediaQuery.of(context).size.width/1.6,
               ),
             ],
           ),
@@ -48,7 +49,7 @@ class TrendingShimmerLoading extends StatelessWidget {
             children: [
               ShimmerContainer(
                 height: 28,
-                width: MediaQuery.of(context).size.width/1.7,
+                width: MediaQuery.of(context).size.width/1.8,
               ),
             ],
           ),
@@ -64,7 +65,7 @@ class TrendingShimmerLoading extends StatelessWidget {
               const SizedBox(width: 10),
               ShimmerContainer(
                 height: 30,
-                width: MediaQuery.of(context).size.width/1.9,
+                width: MediaQuery.of(context).size.width/2,
               ),
             ],
           ),
