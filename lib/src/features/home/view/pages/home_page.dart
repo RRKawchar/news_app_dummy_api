@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    "News Portal",
+                    "RRK News",
                     style: TextStyle(
                         fontSize: 25,
                         fontFamily: "Poppins",
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Hottest News",
+                    "Top News",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(

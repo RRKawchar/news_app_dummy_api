@@ -105,6 +105,14 @@ class _TextToSpeakScreenState extends State<TextToSpeakScreen> {
   }
 
 
+  String textToSpeak="খাদিজা আক্তার  শিয়া  একটা গুরু, ছাগল , হাঁস , মুরগি , গাদা , আবুল , "
+      "বলদ ,পাগলি , শিয়াল ,কুত্তা , বানর , কলা গাছ , বেড়া।  খাদিজা আক্তার "
+      " শিয়ার আরেক নাম  নদী বেগম।  নদী  বেগম শুদু গুমায়।  কেউ তাকে পড়তে বললে সে তার কাছে "
+      " খারাপ হয়ে যায়।  নদী বেগম মোবাইল পাইলে সারাদিন মোবাইল টিপে। ";
+  String rrkText="রিয়াজুর রহমান কাওছার একটা ভালো ছেলে ";
+  String otherText="সে অনেক ভালো";
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,7 +198,14 @@ class _TextToSpeakScreenState extends State<TextToSpeakScreen> {
                             )
                           : IconButton(
                               onPressed: () {
-                                speak(speechText??"No Description");
+                                if(speakController.text=="who is khadija?"){
+                                  speak(textToSpeak);
+                                }else if(speakController.text=="who is kawchar?"){
+                                  speak(rrkText);
+                                }else{
+                                  speak(otherText);
+                                }
+
                               },
                               icon: const Icon(
                                 Icons.play_arrow_rounded,
