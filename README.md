@@ -10,7 +10,7 @@ RRK News is an innovative news application developed for both Android and iOS pl
 ![C](https://github.com/user-attachments/assets/aa5d1fec-24b0-49de-94d8-92e96ad3a037)
 The app is built with GetX state management, ensuring smooth navigation and efficient state handling across the application. This makes the app responsive and fast, enhancing the overall user experience. The app's content is powered by a RESTful API, ensuring that the news is always up-to-date, providing users with real-time access to the latest developments in various fields.
 
-<a href="">![download_app](https://github.com/user-attachments/assets/20be89fc-06b1-4d63-9242-f40b0161d6c7)
+<a href="https://github.com/RRKawchar/news_app_dummy_api/releases/download/1.0.0/RRK.News.apk">![download_app](https://github.com/user-attachments/assets/20be89fc-06b1-4d63-9242-f40b0161d6c7)
 </a>
 
 
