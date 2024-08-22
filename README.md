@@ -1,4 +1,4 @@
-# news_app_dummy_api
+# RRK News 
 
 A new Flutter project.
 
